@@ -1,6 +1,24 @@
-# diagrama-sequencia
+# Diagrama de sequência
 
-Um diagrama de seqüência consiste em um grupo de objetos representados por linhas de vida e as mensagens que eles trocam durante a interação. Um diagrama de seqüência mostra a seqüência de mensagens transmitidas entre objetos. Diagramas de seqüência também mostram as estruturas de controle entre objetos.
+Um diagrama de sequência consiste em um grupo de objetos representados por linhas de vida e as mensagens que eles trocam durante a interação. Um diagrama de seqüência mostra a seqüência de mensagens transmitidas entre objetos. Diagramas de seqüência também mostram as estruturas de controle entre objetos.
+
+Exemplo com [PlantUML](https://plantuml.com/)
+
+Código:
+
+```
+@startuml
+actor User #red
+
+User -> Server: Request: https://robotframework.org/
+Server -> User: Response: 200 ok
+
+@enduml
+```
+
+Resultado: 
+
+<img src="./diagramadesequencia.png" alt="Diagrama de Sequência" style="display:block; margin: auto;" />
 
 ## Ferramentas
 
