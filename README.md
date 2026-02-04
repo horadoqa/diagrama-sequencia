@@ -1,11 +1,18 @@
-# Diagrama de sequência
+# Diagramas de Sequência
 
-Um diagrama de sequência consiste em um grupo de objetos representados por linhas de vida e as mensagens que eles trocam durante a interação. Um diagrama de seqüência mostra a seqüência de mensagens transmitidas entre objetos. Diagramas de seqüência também mostram as estruturas de controle entre objetos.
+Um **diagrama de sequência** representa a interação entre objetos em um sistema ao longo do tempo. Ele mostra:
 
+* **Linhas de vida** de cada objeto ou participante.
+* **Mensagens** trocadas entre os objetos.
+* **Estruturas de controle**, como alternativas, repetições e ações opcionais.
 
-## Exemplo do Diagrama no GITHUB
+Esses diagramas são especialmente úteis para **documentar fluxos de sistema** e **visualizar processos complexos**.
 
-Este fluxo descreve o acesso à página `/cadastro` via requisição HTTP GET.
+---
+
+## Exemplo básico
+
+O diagrama abaixo descreve o fluxo de acesso à página `/cadastro` via uma requisição HTTP GET:
 
 ```mermaid
 sequenceDiagram
@@ -22,16 +29,107 @@ sequenceDiagram
     W-->>U: Response 200 (Página)
 ```
 
-Você pode validar on-line em: [mermaid.live](https://mermaid.live/)
+---
 
-## Algumas ferramentas
+## Estruturas de controle
 
-Alguns sites disponibilizam a criação dos Diagramas
+### 1️⃣ `alt` — Alternativas / if–else
 
-- [Ferramentas](./docs/tools.md)
+Mostra **cenários diferentes** dependendo de condições:
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário
+    participant W as Web Server
+    participant A as Aplicação
+    participant D as Banco de Dados
+
+    U->>W: GET /login
+    W->>A: Encaminha login
+
+    alt Usuário válido
+        A->>D: Verifica credenciais
+        D-->>A: Usuário encontrado
+        A-->>W: Redireciona para dashboard
+    else Usuário inválido
+        A-->>W: Redireciona para página de erro
+    end
+
+    W-->>U: Response final
+```
+
+💡 **Explicação:**
+`alt` define **cenários alternativos** (como `if-else`). Cada bloco começa com `alt` ou `else` e termina com `end`.
+
+---
+
+### 2️⃣ `loop` — Repetições
+
+Indica **ações repetitivas**, como processar múltiplos itens:
+
+```mermaid
+sequenceDiagram
+    participant A as Aplicação
+    participant D as Banco de Dados
+
+    loop Cada item do carrinho
+        A->>D: Consulta preço do item
+        D-->>A: Retorna preço
+    end
+
+    A-->>A: Calcula total
+```
+
+💡 **Explicação:**
+Use `loop` sempre que um mesmo processo precisa ocorrer várias vezes.
+
+---
+
+### 3️⃣ `opt` — Ações opcionais
+
+Representa **operações que podem ou não ocorrer** dependendo de uma condição:
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário
+    participant A as Aplicação
+    participant D as Banco de Dados
+
+    U->>A: GET /perfil
+
+    opt Usuário quer atualizar email
+        A->>D: Atualiza email no banco
+        D-->>A: Confirmação
+    end
+
+    A-->>U: Retorna perfil atualizado
+```
+
+💡 **Explicação:**
+`opt` é ideal para **opcionalidade**, como atualização de dados ou notificações extras.
+
+---
+
+## Validação online
+
+Você pode testar e visualizar seus diagramas online em: [Mermaid Live Editor](https://mermaid.live/)
+
+---
+
+## Ferramentas úteis
+
+Alguns sites e extensões ajudam na criação de diagramas Mermaid:
+
+* [Ferramentas](./docs/tools.md)
+
+No VS Code, extensões como **Markdown Preview Mermaid Support** ou **Mermaid Editor** permitem renderizar diagramas diretamente no editor.
+
+---
 
 ## Conclusão
 
-Existem muitas ferramentas para criar diagramas de sequência, e a escolha da ferramenta depende do seu orçamento, preferências de interface, necessidade de colaboração e complexidade do projeto. Se você precisa de algo simples e gratuito, o **Draw.io** ou **PlantUML** são excelentes opções. Se você preferir uma solução mais robusta, pode optar por ferramentas como **Lucidchart**, **StarUML** ou **Microsoft Visio**, que oferecem mais funcionalidades e suporte corporativo.
+Diagramas de sequência são essenciais para **documentar fluxos de aplicação**, **facilitar o entendimento de processos complexos** e **ajudar equipes a visualizar interações entre sistemas**.
 
-Se você está criando diagramas com frequência e precisa de colaboração em tempo real, **Lucidchart** e **Creately** são ideais. Para desenvolvedores que preferem um fluxo de trabalho mais baseado em código, **PlantUML** é uma excelente escolha.
+Usando `alt`, `loop` e `opt`, é possível representar **condições, repetições e ações opcionais**, tornando o diagrama **mais próximo da realidade do sistema**.
+
+---
